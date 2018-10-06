@@ -10,6 +10,16 @@ const Calculator = class Calculator {
         
     }
 
+    init() {
+        this.firstNumber = "";
+        this.firstSet = false;
+        this.secondNumber = "";
+        this.secondSet = false;
+        this.operand = "";
+        this.opSet = false;
+        this.inputArray = [];
+    }
+
     setFirstNumber(number){
         this.firstNumber += number;
     }
@@ -20,11 +30,20 @@ const Calculator = class Calculator {
 
     setOperand(oper){
         this.operand = oper;
-        this.opSet = true;
+        // this.firstSet = true;
+    }
+
+    setFirstTrue() {
         this.firstSet = true;
     }
 
+    setSecondTrue(){
+        this.secondSet = true;
+    }
 
+    setOpTrue() {
+        this.opSet = true;
+    }
 
     handleInputChange(e) {
         const input = e.target.innerHTML;
@@ -33,30 +52,55 @@ const Calculator = class Calculator {
                 if(input === "0" || input === "1"){
                     if(!this.firstSet){
                         this.setFirstNumber(input);
-                        console.log("adding to first number");
                     } else {
+                        if(this.opSet && this.secondNumber === ""){
+                            this.inputArray.push(this.operand);
+                        }
                         this.setSecondNumber(input);
-                        console.log("adding to second number");
                     }
                 } else {
-                    if(this.secondSet){
+                    if(this.opSet){
                         console.log("can't do that yet!");
-                    } else if(!this.opSet){
+                    } else {
+                        this.setOpTrue();
                         if(!this.firstSet){
+                            this.setFirstTrue();
                             this.inputArray.push(this.firstNumber);
-                            console.log("added first to array");
                         }
                         this.setOperand(input);
-                        this.inputArray.push(input);
-                        console.log("pushing alot of operands to array");
                     }
                 }
             } else {
                 if(input === "="){
-                    this.inputArray.push(this.secondNumber);
-                    console.log(this.inputArray);
+                    if(!this.secondSet){
+                        this.setSecondTrue();
+                        this.inputArray.push(this.secondNumber);
+                    }
+                    const result = this.calculate(this.inputArray);
+                    console.log(result);
                 }
             }
+        }
+    }
+
+    calculate(arr){
+        console.log(arr);
+        const a = parseInt(arr[0]);
+        const b = parseInt(arr[2]);
+        
+        switch(arr[1]){
+            case "+":
+                return this.add(a, b);
+                break;
+            case "-":
+                return this.subtract(a, b);
+                break;
+            case "/":
+                return this.divide(a, b);
+                break;
+            case "*":
+                return this.multiply(a, b);
+                break;
         }
     }
 
