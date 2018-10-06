@@ -85,8 +85,8 @@ const Calculator = class Calculator {
 
     calculate(arr){
         console.log(arr);
-        const a = parseInt(arr[0]);
-        const b = parseInt(arr[2]);
+        const a = parseInt(arr[0],2);
+        const b = parseInt(arr[2],2);
         
         switch(arr[1]){
             case "+":
@@ -105,19 +105,23 @@ const Calculator = class Calculator {
     }
 
     add(a,b){
-        return a + b;
+        let res = a + b;
+        return res.toString(2);
     }
 
     subtract(a,b){
-        return a - b;
+        let res = a - b;
+        return res.toString(2);
     }
 
     divide(a,b){
-        return a / b;
+        let res =  a / b;
+        return res.toString(2);
     }
 
     multiply(a,b){
-        return a * b;
+        let res =  a * b;
+        return res.toString(2);
     }
 
 }
