@@ -70,6 +70,7 @@ const Calculator = class Calculator {
                         this.setOperand(input);
                     }
                 }
+                this.showInputs();
             } else {
                 if(input === "="){
                     if(!this.secondSet){
@@ -78,10 +79,28 @@ const Calculator = class Calculator {
                     }
                     const result = this.calculate(this.inputArray);
                     console.log(result);
+                    this.showResult(result);
+                } else {
+                    let screen = document.getElementById("res");
+                    screen.innerHTML = "";
+                    this.init();
+
                 }
             }
         }
     }
+
+    showInputs() {
+        let screen = document.getElementById("res");
+        screen.innerHTML = `${this.firstNumber}${this.operand}${this.secondNumber}`;
+    }
+
+    showResult(result) {
+        let screen = document.getElementById("res");
+        screen.innerHTML = result;
+    }
+
+
 
     calculate(arr){
         console.log(arr);
