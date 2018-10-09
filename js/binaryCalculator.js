@@ -7,8 +7,11 @@ const Calculator = class Calculator {
         this.operand = "";
         this.opSet = false;
         this.inputArray = [];
+        this.result = "";
         
     }
+
+
 
     init() {
         this.firstNumber = "";
@@ -18,6 +21,7 @@ const Calculator = class Calculator {
         this.operand = "";
         this.opSet = false;
         this.inputArray = [];
+        this.result = "";
     }
 
     setFirstNumber(number){
@@ -48,6 +52,9 @@ const Calculator = class Calculator {
     handleInputChange(e) {
         const input = e.target.innerHTML;
         if(e.target.className.indexOf("btn") != -1){
+            if (this.result !== ""){
+                this.init();
+            }
             if(input != "C" && input != "="){
                 if(input === "0" || input === "1"){
                     if(!this.firstSet){
@@ -149,22 +156,3 @@ let calc = new Calculator();
 document.body.onclick = e => {
     calc.handleInputChange(e);
 }
-
-
-
-
-
-// document.body.onclick = function(e){
-
-//     if(e.target.className.indexOf("btn") != -1){
-//         if(e.target.innerHTML != "C" && e.target.innerHTML != "="){
-//             document.getElementById("res").innerHTML += e.target.innerHTML;
-//         } else if (e.target.innerHTML === "C"){
-//             document.getElementById("res").innerHTML = "";
-//         } else if (e.target.innerHTML === "="){
-//             //do the calculation
-//         }
-
-        
-//     }
-// }
