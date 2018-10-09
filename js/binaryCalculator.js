@@ -1,18 +1,4 @@
 const Calculator = class Calculator {
-    constructor(){
-        this.firstNumber = "";
-        this.firstSet = false;
-        this.secondNumber = "";
-        this.secondSet = false;
-        this.operand = "";
-        this.opSet = false;
-        this.inputArray = [];
-        this.result = "";
-        
-    }
-
-
-
     init() {
         this.firstNumber = "";
         this.firstSet = false;

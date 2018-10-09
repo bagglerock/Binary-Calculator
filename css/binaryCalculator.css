@@ -1,6 +1,9 @@
+body {
+    width: 33%;
+}
+
 .container {
     padding: 5px;
-    width: 400px;
     background-color: #ddd;
 
 }
