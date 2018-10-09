@@ -49,65 +49,82 @@ const Calculator = class Calculator {
         this.opSet = true;
     }
 
-    handleInputChange(e) {
+    handleButtonPress(e){
         const input = e.target.innerHTML;
         if(e.target.className.indexOf("btn") != -1){
-            if (this.result !== ""){
+            if(this.result !== ""){
                 this.init();
-            }
+            } 
             if(input != "C" && input != "="){
                 if(input === "0" || input === "1"){
-                    if(!this.firstSet){
-                        this.setFirstNumber(input);
-                    } else {
-                        if(this.opSet && this.secondNumber === ""){
-                            this.inputArray.push(this.operand);
-                        }
-                        this.setSecondNumber(input);
-                    }
+                    this.handleDigit(input);
                 } else {
-                    if(this.opSet){
-                        console.log("can't do that yet!");
-                    } else {
-                        this.setOpTrue();
-                        if(!this.firstSet){
-                            this.setFirstTrue();
-                            this.inputArray.push(this.firstNumber);
-                        }
-                        this.setOperand(input);
-                    }
+                    this.handleOperand(input);
                 }
-                this.showInputs();
+                this.show();
+            } else if(input === "="){
+                this.handleEquals();
             } else {
-                if(input === "="){
-                    if(!this.secondSet){
-                        this.setSecondTrue();
-                        this.inputArray.push(this.secondNumber);
-                    }
-                    const result = this.calculate(this.inputArray);
-                    console.log(result);
-                    this.showResult(result);
-                } else {
-                    let screen = document.getElementById("res");
-                    screen.innerHTML = "";
-                    this.init();
-
-                }
+                this.handleClear();
             }
         }
     }
 
-    showInputs() {
-        let screen = document.getElementById("res");
-        screen.innerHTML = `${this.firstNumber}${this.operand}${this.secondNumber}`;
+    handleDigit(number){
+        if(!this.firstSet){
+            this.setFirstNumber(number);
+        } else {
+            if(this.opSet && this.secondNumber === ""){
+                this.inputArray.push(this.operand);
+            }
+            this.setSecondNumber(number);
+        }
     }
 
-    showResult(result) {
-        let screen = document.getElementById("res");
-        screen.innerHTML = result;
+    handleOperand(op){
+        if(this.opSet){
+            console.log("can't do that yet!");
+        } else {
+            this.setOpTrue();
+            if(!this.firstSet){
+                this.setFirstTrue();
+                this.inputArray.push(this.firstNumber);
+            }
+            this.setOperand(op);
+        }
     }
 
+    handleEquals() {
+        if(!this.secondSet){
+            if(!this.opSet || !this.firstSet){
+                this.show(this.firstNumber);
+            } else {
+                this.setSecondTrue();
+                this.inputArray.push(this.secondNumber);
+            }
+        }
+        const result = this.calculate(this.inputArray);
+        this.result = result;
+        this.show(result);
+    }
 
+    handleClear() {
+        let screen = document.getElementById("res");
+        screen.innerHTML = "";
+        this.init();
+    }
+
+    show(result) {
+        let screen = document.getElementById("res");
+        if(!this.result){
+            screen.innerHTML = `${this.firstNumber}${this.operand}${this.secondNumber}`;
+        } else {
+            screen.innerHTML = result;
+            this.init();
+        }
+        
+        
+    }
 
     calculate(arr){
         console.log(arr);
@@ -154,5 +171,5 @@ const Calculator = class Calculator {
 
 let calc = new Calculator();
 document.body.onclick = e => {
-    calc.handleInputChange(e);
+    calc.handleButtonPress(e);
 }
