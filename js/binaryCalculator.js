@@ -121,6 +121,7 @@ const Calculator = class Calculator {
         } else {
             screen.innerHTML = result;
             this.init();
+            this.handleDigit(result);
         }
         
         
